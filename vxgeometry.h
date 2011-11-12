@@ -2,6 +2,8 @@
 #define _vxgeometry_h_
 
 #include <cmath>
+#include <climits>
+#include <cfloat>
 
 class vxVector {
 	public:
@@ -33,6 +35,12 @@ class vxVector {
 		inline vxVector operator+ (const vxVector& b) const {
 			return vxVector(x + b.x, y + b.y, z + b.z);
 		}
+		inline vxVector operator- (const vxVector& b) const {
+			return vxVector(x - b.x, y - b.y, z - b.z);
+		}
+		inline vxVector operator* (const float& b) const {
+			return vxVector(x * b, y * b, z * b);
+		}
 		inline vxVector operator- () const {
 			// negation
 			return vxVector(-x, -y, -z);
@@ -48,6 +56,58 @@ class vxVector {
 		float x;
 		float y;
 		float z;
+};
+
+class vxIntersection {
+public:
+	vxIntersection(bool hit) : near(0,0,0), far(0,0,0) { this->hit = hit; }
+public:
+	bool hit;
+	vxVector near;
+	vxVector far;
+};
+
+class vxRay {
+public:
+	vxVector origin;
+	vxVector direction;
+
+	// cube intersection
+	vxIntersection intersect(const vxVector& cubeMin, const vxVector& cubeMax) const {
+		vxVector near(FLT_MIN, FLT_MIN, FLT_MIN);
+		vxVector far(FLT_MAX, FLT_MAX, FLT_MAX);
+
+		// test X planes
+		// test Y planes
+		// test Z planes
+	
+		// survived all the tests, must have passed
+		vxIntersection result = vxIntersection(true);
+		result.near = near;
+		result.far = far;
+		return result;
+	}
+
+	// plane intersection
+	vxIntersection intersect(const vxVector& a, const vxVector& b, const vxVector& c) {
+		vxVector v1 = b - a;
+		vxVector v2 = c - a;
+		vxVector v3 = vxVector::cross(a, b);
+
+		vxVector rotatedRay1 = vxVector(v1.dot(origin - a), v2.dot(origin - a), v3.dot(origin - a));
+		vxVector rotatedRay2 = vxVector(v1.dot(direction - a), v2.dot(direction - a), v3.dot(direction - a));
+
+		if(rotatedRay1.z == rotatedRay2.z) { return vxIntersection(false); } // parallel to plane
+
+
+		// hit, find out where
+		float f = rotatedRay1.z / (rotatedRay2.z - rotatedRay1.z);
+
+		vxIntersection result(true);
+		result.near = result.far = (origin + (origin - direction) * f);
+
+		return result;
+	}
 };
 
 // shorthands:
