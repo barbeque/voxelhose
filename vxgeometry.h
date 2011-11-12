@@ -72,6 +72,9 @@ public:
 	vxVector origin;
 	vxVector direction;
 
+	vxRay(vxVector origin, vxVector direction) : origin(origin), direction(direction) {
+	}
+
 	// cube intersection
 	vxIntersection intersect(const vxVector& cubeMin, const vxVector& cubeMax) const {
 		vxVector near(FLT_MIN, FLT_MIN, FLT_MIN);
@@ -92,7 +95,7 @@ public:
 	vxIntersection intersect(const vxVector& a, const vxVector& b, const vxVector& c) {
 		vxVector v1 = b - a;
 		vxVector v2 = c - a;
-		vxVector v3 = vxVector::cross(a, b);
+		vxVector v3 = vxVector::cross(v1, v2);
 
 		vxVector rotatedRay1 = vxVector(v1.dot(origin - a), v2.dot(origin - a), v3.dot(origin - a));
 		vxVector rotatedRay2 = vxVector(v1.dot(direction - a), v2.dot(direction - a), v3.dot(direction - a));
