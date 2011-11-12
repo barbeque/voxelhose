@@ -77,7 +77,7 @@ public:
 
 	// cube intersection
 	vxIntersection intersect(const vxVector& cubeMin, const vxVector& cubeMax) const {
-		vxVector near(FLT_MIN, FLT_MIN, FLT_MIN);
+		vxVector near(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 		vxVector far(FLT_MAX, FLT_MAX, FLT_MAX);
 
 		// test X planes
