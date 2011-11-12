@@ -14,6 +14,9 @@ void rayPlaneCollisionTests() {
 	vxRay testRay(vxVector(0, 2.5, -5), vxVector(0, 0, 1));
 
 	assert(testRay.intersect(planeA, planeB, planeC).hit);
+
+	vxRay neverHitRay(vxVector(0, 2.5, -5), vxVector(0, 0, -1));
+	assert(neverHitRay.intersect(planeA, planeB, planeC).hit);
 }
 
 int main() {
