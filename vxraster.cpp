@@ -7,7 +7,11 @@ vxRasterizer::vxRasterizer(SDL_Surface* surface) {
 }
 
 void vxRasterizer::renderToScreen() {
-	// TODO shoot a ray properly
+	// TODO generate all the rays
+	// TODO store all the rays in a list
+	// TODO step through the cube surface one at a time, firing all the remaining rays
+	// TODO if a ray hits, delete it from the list and write a pixel to the screen. repeat with next z-layer
+	// TODO if you run out of z-layers abort all remaining rays to bgcolor
 }
 
 // build a sane 8-bit palette
