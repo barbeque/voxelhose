@@ -20,9 +20,22 @@ void rayPlaneCollisionTests() {
 	assert(infiniteHitRay.intersect(planeA, planeB, planeC).hit);
 }
 
+void rayCubeCollisionTests() {
+	// hit a cube
+	vxVector cubeA(0, 0, 0);
+	vxVector cubeB(64, 64, 64);
+	vxRay testRay(vxVector(-64, -64, -64), vxVector(1, 1, 1));
+	assert(testRay.intersect(cubeA, cubeB).hit);
+
+	// miss a cube
+	vxRay antiTestRay(vxVector(70, 70, 70), vxVector(-1, -1, 0));
+	assert(!antiTestRay.intersect(cubeA, cubeB).hit);
+}
+
 int main() {
 	vectorTests();
 	rayPlaneCollisionTests();
+	rayCubeCollisionTests();
 
 	std::cout << "all tests passed" << std::endl;
 	return 0;
