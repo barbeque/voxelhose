@@ -6,6 +6,13 @@
 class vxVoxelBuffer {
 public:
 	vxVoxelBuffer(unsigned int width, unsigned int height, unsigned int depth) {
+		assert(width > 0);
+		assert(height > 0);
+		assert(depth > 0);
+
+		this->width = width;
+		this->height = height;
+		this->depth = depth;
 		this->voxels = new unsigned char[depth * height * width];
 	}
 	~vxVoxelBuffer() {
